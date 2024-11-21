@@ -1,0 +1,56 @@
+@model RutaBus
+@{
+    ViewBag.Title = "Detalles de la Ruta";
+}
+<h2 class="detalles-titulo">Detalles de la Ruta</h2>
+
+<!-- Mostrar mensajes de éxito o error -->
+@if (TempData["Success"] != null)
+{
+    <p class="mensaje-exito">@TempData["Success"]</p>
+}
+@if (TempData["Error"] != null)
+{
+    <p class="mensaje-error">@TempData["Error"]</p>
+}
+
+<div class="ruta-detalles">
+    <h3 class="ruta-info">@Model.Origen - @Model.Destino</h3>
+    <p><strong>Fecha:</strong> @Model.Fecha.ToString("dd/MM/yyyy")</p>
+    <p><strong>Hora de Salida:</strong> @Model.HoraSalida</p>
+    <p><strong>Hora de Llegada:</strong> @Model.HoraLlegada</p>
+    <p><strong>Precio:</strong> @Model.Precio.ToString("C")</p>
+    <p><strong>Información del Autobús:</strong> @Model.BusInfo</p>
+</div>
+
+<h4 class="asientos-titulo">Disponibilidad de Asientos</h4>
+<form id="seatSelectionForm" method="post" action="/Pago/ProcesarPago" class="form-seleccion-asientos">
+    <input type="hidden" name="rutaId" value="@Model.Id" />
+    <input type="hidden" id="asientosSeleccionados" name="asientosSeleccionados" />
+    <ul class="lista-asientos">
+        @foreach (var asiento in Model.Asientos)
+        {
+            <li class="asiento-item">
+                <label class="asiento-label">
+                    <input type="checkbox" class="asientoCheckbox" value="@asiento.Numero" @(asiento.Disponible ? "" : "disabled") />
+                    Asiento @asiento.Numero - <span class="estado-asiento">@((asiento.Disponible ? "Disponible" : "No disponible"))</span>
+                </label>
+            </li>
+        }
+    </ul>
+    <button type="submit" class="btn-reservar">Reservar Asientos Seleccionados</button>
+</form>
+
+<script>
+    document.getElementById('seatSelectionForm').addEventListener('submit', function(event) {
+        const selectedSeats = Array.from(document.querySelectorAll('.asientoCheckbox:checked'))
+                                   .map(checkbox => checkbox.value);
+        
+        if (selectedSeats.length === 0) {
+            event.preventDefault();
+            alert("Por favor, selecciona al menos un asiento para reservar.");
+        } else {
+            document.getElementById('asientosSeleccionados').value = selectedSeats.join(',');
+        }
+    });
+</script>

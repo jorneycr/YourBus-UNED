@@ -1,0 +1,16 @@
+@{
+    ViewBag.Title = "Detalles";
+}
+
+<h2>Seleccionar Asiento para Ruta: @Model.Origen - @Model.Destino</h2>
+<form id="seatForm" method="post" action="/Reserva/Confirmar">
+    <input type="hidden" name="rutaId" value="@Model.Id" />
+    <label>Asientos:</label>
+    <select name="asientosSeleccionados" multiple required>
+        @foreach (var asiento in Model.Asientos)
+        {
+            <option value="@asiento.Numero">@asiento.Numero</option>
+        }
+    </select>
+    <button type="submit">Reservar Asientos</button>
+</form>

@@ -1,0 +1,44 @@
+@{
+    ViewBag.Title = "Historial";
+}
+
+@model IEnumerable<Reserva>
+
+<div class="historial-reservas">
+    <h2>Historial de Reservas</h2>
+
+    @if (!Model.Any())
+    {
+        <p class="no-reservas">No tienes reservas anteriores.</p>
+    }
+    else
+    {
+        <table class="tabla-reservas">
+            <thead>
+                <tr>
+                    <th>Ruta</th>
+                    <th>Fecha</th>
+                    <th>Asiento</th>
+                    <th>Estado del Pago</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var reserva in Model)
+                {
+                    <tr>
+                        <td>@reserva.Ruta.Origen - @reserva.Ruta.Destino</td>
+                        <td>@reserva.FechaReserva.ToString("dd/MM/yyyy")</td>
+                        <td>@reserva.AsientoSeleccionado.Numero</td>
+                        <td>@reserva.EstadoPago</td>
+                        <td>
+                            <form asp-action="CancelarReserva" asp-controller="Reserva" asp-route-reservaId="@reserva.Id" method="post" onsubmit="return confirm('¿Estás seguro de que deseas cancelar esta reserva?');">
+                                <button type="submit" class="btn-cancelar" @(reserva.PuedeCancelar ? "" : "disabled")>Cancelar</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
