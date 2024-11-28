@@ -11,7 +11,7 @@ builder.Services.AddHttpsRedirection(options =>
 
 // Configura el DbContext para usar SQL Server
 builder.Services.AddDbContext<TravelContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionLocal")));
 
 // Configura Identity con roles
 builder.Services.AddIdentity<Usuario, IdentityRole>()
