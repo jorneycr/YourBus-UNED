@@ -2,17 +2,25 @@
     ViewBag.Title = "Reservar";
 }
 
-@model Reserva
-<h2>Reserva Confirmada</h2>
-<p>Gracias, @Model.Usuario.Nombre. Su reserva ha sido confirmada.</p>
+<!-- Título principal accesible -->
+<h1 id="page-title">Reserva Confirmada</h1>
 
-<h3>Detalles de la Reserva</h3>
-<ul>
-    <li>Ruta: @Model.Ruta.Origen - @Model.Ruta.Destino</li>
-    <li>Fecha: @Model.Ruta.Fecha.ToString("dd/MM/yyyy")</li>
-    <li>Asiento: @Model.AsientoSeleccionado.Numero</li>
-    <li>Estado de Pago: @Model.EstadoPago</li>
-</ul>
+<!-- Mensaje de agradecimiento con estructura semántica -->
+<p>Gracias, <strong>@Model.Usuario.Nombre</strong>. Su reserva ha sido confirmada.</p>
 
+<!-- Sección accesible para los detalles de la reserva -->
+<section aria-labelledby="reservation-details">
+    <h2 id="reservation-details">Detalles de la Reserva</h2>
+    <ul>
+        <li><strong>Ruta:</strong> @Model.Ruta.Origen - @Model.Ruta.Destino</li>
+        <li><strong>Fecha:</strong> @Model.Ruta.Fecha.ToString("dd/MM/yyyy")</li>
+        <li><strong>Asiento:</strong> @Model.AsientoSeleccionado.Numero</li>
+        <li><strong>Estado de Pago:</strong> @Model.EstadoPago</li>
+    </ul>
+</section>
+
+<!-- Mensaje de despedida -->
 <p>¡Buen viaje!</p>
-<a href="/Usuario/Historial">Ver Historial de Reservas</a>
+
+<!-- Enlace accesible con propósito claro -->
+<a href="/Usuario/Historial" class="button" aria-label="Ir al historial de reservas del usuario">Ver Historial de Reservas</a>

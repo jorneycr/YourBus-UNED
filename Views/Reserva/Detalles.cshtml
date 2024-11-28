@@ -2,15 +2,30 @@
     ViewBag.Title = "Detalles";
 }
 
-<h2>Seleccionar Asiento para Ruta: @Model.Origen - @Model.Destino</h2>
-<form id="seatForm" method="post" action="/Reserva/Confirmar">
-    <input type="hidden" name="rutaId" value="@Model.Id" />
-    <label>Asientos:</label>
-    <select name="asientosSeleccionados" multiple required>
-        @foreach (var asiento in Model.Asientos)
-        {
-            <option value="@asiento.Numero">@asiento.Numero</option>
-        }
-    </select>
-    <button type="submit">Reservar Asientos</button>
+<!-- Título principal accesible -->
+<h1 id="page-title">Seleccionar Asiento para Ruta: @Model.Origen - @Model.Destino</h1>
+
+<!-- Formulario de selección de asiento con mejoras de accesibilidad -->
+<form id="seatForm" method="post" action="/Reserva/Confirmar" aria-labelledby="seat-selection-form">
+    <fieldset>
+        <legend id="seat-selection-form">Detalles de la Reserva - Selección de Asientos</legend>
+        
+        <!-- Campo oculto -->
+        <input type="hidden" name="rutaId" value="@Model.Id" />
+
+        <!-- Etiqueta accesible para la lista de asientos -->
+        <div>
+            <label for="seats" id="seats-label">Asientos Disponibles:</label>
+            <select name="asientosSeleccionados" id="seats" multiple required aria-describedby="seats-help">
+                @foreach (var asiento in Model.Asientos)
+                {
+                    <option value="@asiento.Numero">@asiento.Numero</option>
+                }
+            </select>
+            <small id="seats-help">Seleccione uno o más asientos de la lista.</small>
+        </div>
+
+        <!-- Botón de enviar con descripción accesible -->
+        <button type="submit" aria-label="Confirmar selección de asientos">Reservar Asientos</button>
+    </fieldset>
 </form>

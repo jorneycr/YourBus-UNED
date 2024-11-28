@@ -5,22 +5,22 @@
 @model IEnumerable<Reserva>
 
 <div class="historial-reservas">
-    <h2>Historial de Reservas</h2>
+    <h2 id="historialTitle">Historial de Reservas</h2>
 
     @if (!Model.Any())
     {
-        <p class="no-reservas">No tienes reservas anteriores.</p>
+        <p class="no-reservas" role="alert" aria-live="polite">No tienes reservas anteriores.</p>
     }
     else
     {
-        <table class="tabla-reservas">
+        <table class="tabla-reservas" aria-labelledby="historialTitle">
             <thead>
                 <tr>
-                    <th>Ruta</th>
-                    <th>Fecha</th>
-                    <th>Asiento</th>
-                    <th>Estado del Pago</th>
-                    <th>Acciones</th>
+                    <th scope="col">Ruta</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Asiento</th>
+                    <th scope="col">Estado del Pago</th>
+                    <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,8 +32,11 @@
                         <td>@reserva.AsientoSeleccionado.Numero</td>
                         <td>@reserva.EstadoPago</td>
                         <td>
-                            <form asp-action="CancelarReserva" asp-controller="Reserva" asp-route-reservaId="@reserva.Id" method="post" onsubmit="return confirm('¿Estás seguro de que deseas cancelar esta reserva?');">
-                                <button type="submit" class="btn-cancelar" @(reserva.PuedeCancelar ? "" : "disabled")>Cancelar</button>
+                            <form asp-action="CancelarReserva" asp-controller="Reserva" asp-route-reservaId="@reserva.Id" method="post" onsubmit="return confirm('¿Estás seguro de que deseas cancelar esta reserva?');" aria-live="assertive">
+                                <button type="submit" class="btn-cancelar" 
+                                        aria-label="Cancelar reserva"
+                                        @(reserva.PuedeCancelar ? "" : "disabled") 
+                                        title="Cancelar esta reserva">Cancelar</button>
                             </form>
                         </td>
                     </tr>

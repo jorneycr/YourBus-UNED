@@ -1,18 +1,63 @@
 ﻿@{
     ViewBag.Title = "Página Principal";
 }
-<h2 style="text-align: center;">Bienvenido al Sistema de Reservas de Viajes</h2>
+
+<!-- Título principal con etiqueta semántica -->
+<h1 style="text-align: center;">Bienvenido al Sistema de Reservas de Viajes</h1>
 <p style="text-align: center;">Encuentra y reserva rutas fácilmente.</p>
 
-<h3 style="text-align: center;">Buscar Rutas</h3>
+<!-- Encabezado de sección -->
+<h2 style="text-align: center;">Buscar Rutas</h2>
+
+<!-- Formulario accesible -->
 <form id="searchForm" method="post" action="/Busqueda/Resultados">
-    <label>Origen: <input type="text" name="origen" required /></label>
-    <label>Destino: <input type="text" name="destino" required /></label>
-    <label>Fecha: <input type="date" name="fecha" required /></label>
-    <button type="submit">Buscar</button>
+    <!-- Campo Origen -->
+    <label for="origen">Origen:</label>
+    <input 
+        type="text" 
+        id="origen" 
+        name="origen" 
+        required 
+        aria-required="true" 
+        aria-label="Campo para ingresar la ciudad de origen"
+        placeholder="Ingrese ciudad de origen"
+    />
+
+    <!-- Campo Destino -->
+    <label for="destino">Destino:</label>
+    <input 
+        type="text" 
+        id="destino" 
+        name="destino" 
+        required 
+        aria-required="true" 
+        aria-label="Campo para ingresar la ciudad de destino"
+        placeholder="Ingrese ciudad de destino"
+    />
+
+    <!-- Campo Fecha -->
+    <label for="fecha">Fecha:</label>
+    <input 
+        type="date" 
+        id="fecha" 
+        name="fecha" 
+        required 
+        aria-required="true" 
+        aria-label="Campo para seleccionar la fecha de viaje"
+    />
+
+    <!-- Botón Buscar -->
+    <button 
+        type="submit" 
+        aria-label="Buscar rutas disponibles"
+    >
+        Buscar
+    </button>
 </form>
 
-<div class="promotions">
+<!-- Sección de Promociones -->
+<section class="promotions" aria-labelledby="promotions-title">
+    <h2 id="promotions-title">Promociones</h2>
     <p>Descuentos del 20% en rutas seleccionadas.</p>
     <p>Consulta nuestras promociones para usuarios frecuentes.</p>
-</div>
+</section>

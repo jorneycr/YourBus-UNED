@@ -4,13 +4,67 @@
 
 @model dynamic
 
-<div class="perfil">
-    <h2>Perfil de Usuario</h2>
+<div class="perfil" role="region" aria-labelledby="perfilTitle">
+    <h2 id="perfilTitle">Perfil de Usuario</h2>
     
-    <p><strong>Email:</strong> @Model.Email</p>
-    <p><strong>Nombre:</strong> @Model.Nombre</p>
-    <p><strong>Apellido:</strong> @Model.Apellido</p>
-    <p><strong>Teléfono:</strong> 88888888</p>
+    <section aria-labelledby="emailSection">
+        <h3 id="emailSection">Email</h3>
+        <p>@Model.Email</p>
+    </section>
 
-    <a href="@Url.Action("CambiarContrasena", "Usuario")" class="btn-link">Cambiar Contraseña</a>
+    <section aria-labelledby="nombreSection">
+        <h3 id="nombreSection">Nombre</h3>
+        <p>@Model.Nombre</p>
+    </section>
+
+    <section aria-labelledby="apellidoSection">
+        <h3 id="apellidoSection">Apellido</h3>
+        <p>@Model.Apellido</p>
+    </section>
+
+    <section aria-labelledby="telefonoSection">
+        <h3 id="telefonoSection">Teléfono</h3>
+        <p>88888888</p>
+    </section>
+
+    <a href="@Url.Action("CambiarContrasena", "Usuario")" class="btn-link" aria-label="Cambiar la contraseña de usuario">Cambiar Contraseña</a>
 </div>
+
+<style>
+    .perfil {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .perfil h2 {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .perfil section {
+        margin-bottom: 15px;
+        text-align: left;
+    }
+
+    .perfil section h3 {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .btn-link {
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+    }
+
+    .btn-link:hover {
+        text-decoration: none;
+        color: white;
+    }
+</style>

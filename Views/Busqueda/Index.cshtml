@@ -2,11 +2,28 @@
     ViewBag.Title = "Buscar Ruta";
 }
 
-<h2 style="text-align: center;">Buscar Ruta</h2>
+<!-- Título principal accesible -->
+<h1 id="page-title" style="text-align: center;">Buscar Ruta</h1>
+
+<!-- Espaciado para mejorar la legibilidad -->
 <br><br>
-<form id="searchForm" method="post" action="/Busqueda/Resultados">
-    <label>Origen: <input type="text" name="origen" required /></label>
-    <label>Destino: <input type="text" name="destino" required /></label>
-    <label>Fecha: <input type="date" name="fecha" required /></label>
-    <button type="submit">Buscar</button>
+
+<!-- Formulario accesible para la búsqueda -->
+<form id="searchForm" method="post" action="/Busqueda/Resultados" aria-labelledby="page-title">
+    <!-- Etiquetas y campos de formulario accesibles -->
+    <div class="form-group">
+        <label for="origen" class="form-label">Origen: <span class="required">*</span></label>
+        <input type="text" id="origen" name="origen" required class="form-control" aria-required="true" placeholder="Ej. Ciudad de México" />
+    </div>
+    <div class="form-group">
+        <label for="destino" class="form-label">Destino: <span class="required">*</span></label>
+        <input type="text" id="destino" name="destino" required class="form-control" aria-required="true" placeholder="Ej. Guadalajara" />
+    </div>
+    <div class="form-group">
+        <label for="fecha" class="form-label">Fecha: <span class="required">*</span></label>
+        <input type="date" id="fecha" name="fecha" required class="form-control" aria-required="true" />
+    </div>
+
+    <!-- Botón de envío accesible -->
+    <button type="submit" class="btn-submit" aria-label="Buscar rutas">Buscar</button>
 </form>

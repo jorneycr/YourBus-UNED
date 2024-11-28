@@ -2,22 +2,54 @@
     ViewBag.Title = "Procesar Pago";
 }
 
-<h2>Procesar Pago</h2>
+<!-- Título principal accesible -->
+<h1 id="page-title">Procesar Pago</h1>
 
+<!-- Explicación del contenido -->
 <p>Estás a punto de reservar los siguientes asientos:</p>
-<ul class="paymentUl">
+
+<!-- Lista accesible con propósito claro -->
+<ul class="paymentUl" aria-labelledby="reserved-seats">
     @foreach (var asiento in ViewBag.AsientosSeleccionados as List<string>)
     {
         <li class="paymentLi">Asiento @asiento</li>
     }
 </ul>
 
-<form id="paymentForm" method="post" action="/Pago/ConfirmarPago">
-    <input type="hidden" name="rutaId" value="@ViewBag.RutaId" />
-    <input type="hidden" name="asientosSeleccionados" value="@string.Join(",", ViewBag.AsientosSeleccionados)" />
-    
-    <label>Número de Tarjeta: <input type="text" name="cardNumber" required maxlength="16" /></label><br />
-    <label>Fecha de Expiración: <input type="text" name="expiryDate" required placeholder="MM/AA" /></label><br />
-    <label>CVV: <input type="text" name="cvv" required maxlength="3" /></label><br />
-    <button type="submit">Pagar</button>
+<!-- Formulario de pago accesible -->
+<form id="paymentForm" method="post" action="/Pago/ConfirmarPago" aria-labelledby="payment-section">
+    <fieldset>
+        <legend id="payment-section">Detalles del Pago</legend>
+
+        <!-- Campo oculto -->
+        <input type="hidden" name="rutaId" value="@ViewBag.RutaId" />
+        <input type="hidden" name="asientosSeleccionados" value="@string.Join(",", ViewBag.AsientosSeleccionados)" />
+
+        <!-- Número de tarjeta -->
+        <div>
+            <label for="cardNumber">Número de Tarjeta:</label>
+            <input type="text" id="cardNumber" name="cardNumber" required maxlength="16" 
+                   aria-describedby="cardNumberHelp" pattern="\d{16}" />
+            <small id="cardNumberHelp">Ingrese los 16 dígitos sin espacios ni guiones.</small>
+        </div>
+
+        <!-- Fecha de expiración -->
+        <div>
+            <label for="expiryDate">Fecha de Expiración:</label>
+            <input type="text" id="expiryDate" name="expiryDate" required placeholder="MM/AA" 
+                   aria-describedby="expiryHelp" pattern="\d{2}/\d{2}" />
+            <small id="expiryHelp">Formato: MM/AA</small>
+        </div>
+
+        <!-- CVV -->
+        <div>
+            <label for="cvv">CVV:</label>
+            <input type="text" id="cvv" name="cvv" required maxlength="3" 
+                   aria-describedby="cvvHelp" pattern="\d{3}" />
+            <small id="cvvHelp">Los 3 dígitos al reverso de la tarjeta.</small>
+        </div>
+
+        <!-- Botón de pago -->
+        <button type="submit" aria-label="Procesar el pago de la reserva">Pagar</button>
+    </fieldset>
 </form>

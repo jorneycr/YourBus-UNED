@@ -1,16 +1,22 @@
+@{
+    ViewBag.Title = "Gestión de Usuarios";
+}
+
 @model List<UsuarioConRolesViewModel>
 
-<div class="gestion-usuarios-container">
-    <h2 class="gestion-usuarios-title">Gestión de Usuarios</h2>
+<div class="gestion-usuarios-container" role="region" aria-labelledby="gestion-usuarios-title">
+    <h2 id="gestion-usuarios-title">Gestión de Usuarios</h2>
 
-    <table class="gestion-usuarios-table">
+    <table class="gestion-usuarios-table" aria-describedby="usuarios-table-description">
+        <!-- Descripción para la tabla -->
+        <caption id="usuarios-table-description" class="sr-only">Lista de usuarios con roles y acciones disponibles.</caption>
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Acciones</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Email</th>
+                <th scope="col">Roles</th>
+                <th scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -22,12 +28,12 @@
                     <td>@usuario.Email</td>
                     <td>@string.Join(", ", usuario.Roles)</td>
                     <td>
-                        <a asp-action="EditarUsuario" asp-route-id="@usuario.Id" class="gestion-usuarios-action-link">Editar</a>
+                        <a href="@Url.Action("EditarUsuario", new { id = usuario.Id })" class="gestion-usuarios-action-link" role="button" aria-label="Editar usuario @usuario.Nombre">Editar</a>
                         <form asp-action="InactivarUsuario" asp-route-id="@usuario.Id" method="post" class="gestion-usuarios-action-form" onsubmit="return confirm('¿Estás seguro de que quieres inactivar este usuario?');">
-                            <button type="submit" class="gestion-usuarios-action-button">Inactivar</button>
+                            <button type="submit" class="gestion-usuarios-action-button" aria-label="Inactivar usuario @usuario.Nombre">Inactivar</button>
                         </form>
                         <form asp-action="ActivarUsuario" asp-route-id="@usuario.Id" method="post" class="gestion-usuarios-action-form" onsubmit="return confirm('¿Estás seguro de que quieres activar este usuario?');">
-                            <button type="submit" class="gestion-usuarios-action-button-activar">Activar</button>
+                            <button type="submit" class="gestion-usuarios-action-button-activar" aria-label="Activar usuario @usuario.Nombre">Activar</button>
                         </form>
                     </td>
                 </tr>
@@ -94,6 +100,7 @@
 .gestion-usuarios-action-form {
     display: inline;
 }
+
 .gestion-usuarios-action-button-activar {
     padding: 8px 12px;
     font-size: 14px;

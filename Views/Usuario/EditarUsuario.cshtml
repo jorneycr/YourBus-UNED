@@ -1,124 +1,141 @@
+@{
+    ViewBag.Title = "Cambio Contraseña";
+}
+
+
 @model EditarUsuarioViewModel
 
 <div class="editar-usuario-container">
-    <h2 class="editar-usuario-title">Editar Usuario</h2>
+    <h2 class="editar-usuario-title" id="formTitle">Editar Usuario</h2>
 
-    <form asp-action="EditarUsuario" method="post">
+    <form asp-action="EditarUsuario" method="post" aria-labelledby="formTitle">
         <input type="hidden" asp-for="Id" />
-        
+
         <div class="editar-usuario-form-group">
-            <label>Nombre</label>
-            <input asp-for="Nombre" />
-        </div>
-        
-        <div class="editar-usuario-form-group">
-            <label>Apellido</label>
-            <input asp-for="Apellido" />
-        </div>
-        
-        <div class="editar-usuario-form-group">
-            <label>Email</label>
-            <input asp-for="Email" />
-        </div>
-        
-        <div class="editar-usuario-form-group">
-            <label>Teléfono</label>
-            <input asp-for="PhoneNumber" />
-        </div>
-        
-        <div class="editar-usuario-roles">
-            <label>Roles</label>
-            @foreach (var role in ViewBag.AllRoles)
-            {
-                <div class="editar-usuario-role-checkbox">
-                    <input type="checkbox" name="SelectedRoles" value="@role" @(Model.Roles.Contains(role) ? "checked" : "") />
-                    <label>@role</label>
-                </div>
-            }
+            <label for="Nombre" class="sr-only">Nombre</label>
+            <input asp-for="Nombre" id="Nombre" aria-label="Nombre del usuario" />
         </div>
 
-        <button type="submit" class="editar-usuario-submit-btn">Guardar Cambios</button>
+        <div class="editar-usuario-form-group">
+            <label for="Apellido" class="sr-only">Apellido</label>
+            <input asp-for="Apellido" id="Apellido" aria-label="Apellido del usuario" />
+        </div>
+
+        <div class="editar-usuario-form-group">
+            <label for="Email" class="sr-only">Email</label>
+            <input asp-for="Email" id="Email" aria-label="Email del usuario" type="email" />
+        </div>
+
+        <div class="editar-usuario-form-group">
+            <label for="PhoneNumber" class="sr-only">Teléfono</label>
+            <input asp-for="PhoneNumber" id="PhoneNumber" aria-label="Número de teléfono del usuario" type="tel" />
+        </div>
+
+        <div class="editar-usuario-roles">
+            <label for="roles" class="sr-only">Roles</label>
+            <div id="roles" role="group" aria-labelledby="rolesTitle">
+                <h3 id="rolesTitle">Asignar Roles</h3>
+                @foreach (var role in ViewBag.AllRoles)
+                {
+                    <div class="editar-usuario-role-checkbox">
+                        <input type="checkbox" name="SelectedRoles" value="@role" id="@role" @(Model.Roles.Contains(role) ? "checked" : "") aria-labelledby="@role" />
+                        <label for="@role">@role</label>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <button type="submit" class="editar-usuario-submit-btn" aria-label="Guardar cambios">Guardar Cambios</button>
     </form>
 </div>
 
 <style>
-    
-/*Editar usuarios*/
-.editar-usuario-container {
-    max-width: 600px;
-    margin: 50px auto;
-    text-align: center;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
-}
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        border: 0;
+        clip: rect(0, 0, 0, 0);
+        overflow: hidden;
+    }
 
-.editar-usuario-title {
-    font-size: 28px;
-    color: #333;
-    margin-bottom: 20px;
-}
+    /*Editar usuarios*/
+    .editar-usuario-container {
+        max-width: 600px;
+        margin: 50px auto;
+        text-align: center;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+    }
 
-.editar-usuario-form-group {
-    margin-bottom: 15px;
-    text-align: left;
-}
+    .editar-usuario-title {
+        font-size: 28px;
+        color: #333;
+        margin-bottom: 20px;
+    }
 
-.editar-usuario-form-group label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 5px;
-    color: #555;
-}
+    .editar-usuario-form-group {
+        margin-bottom: 15px;
+        text-align: left;
+    }
 
-.editar-usuario-form-group input[type="text"],
-.editar-usuario-form-group input[type="email"],
-.editar-usuario-form-group input[type="tel"] {
-    width: 100%;
-    padding: 8px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
+    .editar-usuario-form-group label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+    }
 
-.editar-usuario-roles {
-    margin-top: 15px;
-    text-align: left;
-}
+    .editar-usuario-form-group input[type="text"],
+    .editar-usuario-form-group input[type="email"],
+    .editar-usuario-form-group input[type="tel"] {
+        width: 100%;
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
 
-.editar-usuario-roles label {
-    margin-left: 5px;
-    color: #333;
-    font-weight: normal;
-}
+    .editar-usuario-roles {
+        margin-top: 15px;
+        text-align: left;
+    }
 
-.editar-usuario-role-checkbox {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-}
+    .editar-usuario-roles label {
+        margin-left: 5px;
+        color: #333;
+        font-weight: normal;
+    }
 
-.editar-usuario-submit-btn {
-    padding: 10px 20px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 20px;
-}
+    .editar-usuario-role-checkbox {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+    }
 
-.editar-usuario-submit-btn:hover {
-    background-color: #0056b3;
-}
+    .editar-usuario-submit-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 20px;
+    }
 
-.editar-usuario-submit-btn:focus {
-    outline: none;
-}
+    .editar-usuario-submit-btn:hover {
+        background-color: #0056b3;
+    }
 
+    .editar-usuario-submit-btn:focus {
+        outline: none;
+    }
 </style>

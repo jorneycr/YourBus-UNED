@@ -2,20 +2,23 @@
 @{
     ViewBag.Title = "Detalles de la Ruta";
 }
-<h2 class="detalles-titulo">Detalles de la Ruta</h2>
 
-<!-- Mostrar mensajes de éxito o error -->
+<!-- Título principal accesible -->
+<h1 id="page-title" class="detalles-titulo">Detalles de la Ruta</h1>
+
+<!-- Mostrar mensajes de éxito o error con roles y atributos de accesibilidad -->
 @if (TempData["Success"] != null)
 {
-    <p class="mensaje-exito">@TempData["Success"]</p>
+    <p class="mensaje-exito" role="alert">@TempData["Success"]</p>
 }
 @if (TempData["Error"] != null)
 {
-    <p class="mensaje-error">@TempData["Error"]</p>
+    <p class="mensaje-error" role="alert">@TempData["Error"]</p>
 }
 
 <div class="ruta-detalles">
-    <h3 class="ruta-info">@Model.Origen - @Model.Destino</h3>
+    <!-- Sección con los detalles de la ruta -->
+    <h2 class="ruta-info">@Model.Origen - @Model.Destino</h2>
     <p><strong>Fecha:</strong> @Model.Fecha.ToString("dd/MM/yyyy")</p>
     <p><strong>Hora de Salida:</strong> @Model.HoraSalida</p>
     <p><strong>Hora de Llegada:</strong> @Model.HoraLlegada</p>
@@ -23,25 +26,33 @@
     <p><strong>Información del Autobús:</strong> @Model.BusInfo</p>
 </div>
 
-<h4 class="asientos-titulo">Disponibilidad de Asientos</h4>
-<form id="seatSelectionForm" method="post" action="/Pago/ProcesarPago" class="form-seleccion-asientos">
+<!-- Título de sección accesible -->
+<h3 id="seats-availability" class="asientos-titulo">Disponibilidad de Asientos</h3>
+
+<!-- Formulario accesible de selección de asientos -->
+<form id="seatSelectionForm" method="post" action="/Pago/ProcesarPago" class="form-seleccion-asientos" aria-labelledby="seats-availability">
     <input type="hidden" name="rutaId" value="@Model.Id" />
     <input type="hidden" id="asientosSeleccionados" name="asientosSeleccionados" />
+    
+    <!-- Lista de asientos con descripciones accesibles -->
     <ul class="lista-asientos">
         @foreach (var asiento in Model.Asientos)
         {
             <li class="asiento-item">
-                <label class="asiento-label">
-                    <input type="checkbox" class="asientoCheckbox" value="@asiento.Numero" @(asiento.Disponible ? "" : "disabled") />
+                <label class="asiento-label" for="asiento-@asiento.Numero">
+                    <input type="checkbox" class="asientoCheckbox" id="asiento-@asiento.Numero" value="@asiento.Numero" @(asiento.Disponible ? "" : "disabled") aria-checked="false" aria-labelledby="asiento-@asiento.Numero">
                     Asiento @asiento.Numero - <span class="estado-asiento">@((asiento.Disponible ? "Disponible" : "No disponible"))</span>
                 </label>
             </li>
         }
     </ul>
-    <button type="submit" class="btn-reservar">Reservar Asientos Seleccionados</button>
+    
+    <!-- Botón de envío accesible -->
+    <button type="submit" class="btn-reservar" aria-label="Reservar asientos seleccionados">Reservar Asientos Seleccionados</button>
 </form>
 
 <script>
+    // Validación para asegurarse de que al menos un asiento sea seleccionado
     document.getElementById('seatSelectionForm').addEventListener('submit', function(event) {
         const selectedSeats = Array.from(document.querySelectorAll('.asientoCheckbox:checked'))
                                    .map(checkbox => checkbox.value);

@@ -4,33 +4,41 @@
 
 @model CambiarContrasenaViewModel
 
-<div class="cambiar-contrasena">
-    <h2>Cambiar Contraseña</h2>
+<div class="cambiar-contrasena" role="form" aria-labelledby="form-title">
+    <h2 id="form-title">Cambiar Contraseña</h2>
 
     @if (TempData["Mensaje"] != null)
     {
-        <p class="mensaje">@TempData["Mensaje"]</p>
+        <p class="mensaje" role="alert">@TempData["Mensaje"]</p>
     }
 
-    <form asp-action="CambiarContrasena" method="post">
-        <div class="form-group">
-            <label asp-for="ContrasenaActual"></label>
-            <input asp-for="ContrasenaActual" class="form-control" />
-            <span asp-validation-for="ContrasenaActual" class="text-danger"></span>
+    <form asp-action="CambiarContrasena" method="post" aria-describedby="form-instructions">
+        <!-- Instrucciones generales para el formulario -->
+        <div id="form-instructions" class="sr-only">
+            Por favor, ingresa tu contraseña actual, luego tu nueva contraseña y confírmala antes de hacer clic en "Cambiar Contraseña".
         </div>
 
         <div class="form-group">
-            <label asp-for="NuevaContrasena"></label>
-            <input asp-for="NuevaContrasena" class="form-control" />
-            <span asp-validation-for="NuevaContrasena" class="text-danger"></span>
+            <label asp-for="ContrasenaActual" for="ContrasenaActual" class="form-label">Contraseña Actual</label>
+            <input asp-for="ContrasenaActual" class="form-control" id="ContrasenaActual" aria-required="true" aria-describedby="contrasenaActual-help" />
+            <span asp-validation-for="ContrasenaActual" class="text-danger" aria-live="assertive"></span>
+            <small id="contrasenaActual-help" class="form-text text-muted">Ingresa la contraseña que usas actualmente.</small>
         </div>
 
         <div class="form-group">
-            <label asp-for="ConfirmarContrasena"></label>
-            <input asp-for="ConfirmarContrasena" class="form-control" />
-            <span asp-validation-for="ConfirmarContrasena" class="text-danger"></span>
+            <label asp-for="NuevaContrasena" for="NuevaContrasena" class="form-label">Nueva Contraseña</label>
+            <input asp-for="NuevaContrasena" class="form-control" id="NuevaContrasena" aria-required="true" aria-describedby="nuevaContrasena-help" />
+            <span asp-validation-for="NuevaContrasena" class="text-danger" aria-live="assertive"></span>
+            <small id="nuevaContrasena-help" class="form-text text-muted">La nueva contraseña debe ser diferente a la actual.</small>
         </div>
 
-        <button type="submit" class="btn-primario">Cambiar Contraseña</button>
+        <div class="form-group">
+            <label asp-for="ConfirmarContrasena" for="ConfirmarContrasena" class="form-label">Confirmar Contraseña</label>
+            <input asp-for="ConfirmarContrasena" class="form-control" id="ConfirmarContrasena" aria-required="true" aria-describedby="confirmarContrasena-help" />
+            <span asp-validation-for="ConfirmarContrasena" class="text-danger" aria-live="assertive"></span>
+            <small id="confirmarContrasena-help" class="form-text text-muted">Vuelve a escribir tu nueva contraseña para confirmarla.</small>
+        </div>
+
+        <button type="submit" class="btn-primario" aria-label="Cambiar contraseña">Cambiar Contraseña</button>
     </form>
 </div>
