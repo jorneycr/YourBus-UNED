@@ -25,9 +25,9 @@ builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
 // Seed data e inicializar roles
-// using (var scope = app.Services.CreateScope())
-// {
-//     var services = scope.ServiceProvider;
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
 
 //     // Seed roles "Usuario" y "Admin"
 //     TravelContext.SeedRolesAsync(services).Wait();
@@ -35,7 +35,7 @@ var app = builder.Build();
 //     // Seed data adicional si es necesario
 //     var context = services.GetRequiredService<TravelContext>();
 //     TravelContext.SeedData(context);
-// }
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -48,6 +48,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// Habilitar el uso de sesiones
+app.UseSession();
 
 app.UseAuthentication(); // Asegúrate de agregar autenticación antes de la autorización
 app.UseAuthorization();
