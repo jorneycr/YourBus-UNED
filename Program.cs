@@ -49,9 +49,6 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// Habilitar el uso de sesiones
-app.UseSession();
-
 app.UseAuthentication(); // Asegúrate de agregar autenticación antes de la autorización
 app.UseAuthorization();
 
