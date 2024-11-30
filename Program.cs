@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +12,7 @@ builder.Services.AddHttpsRedirection(options =>
 
 // Configura el DbContext para usar SQL Server
 builder.Services.AddDbContext<TravelContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionLocal")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Configura Identity con roles
 builder.Services.AddIdentity<Usuario, IdentityRole>()
@@ -40,7 +41,7 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
+    //app.UseHsts();
 }
 
 app.UseHttpsRedirection();
@@ -56,3 +57,12 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
+app.UseHttpsRedirection();
