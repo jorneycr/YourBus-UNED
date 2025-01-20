@@ -2,11 +2,6 @@
 
 Este es un sistema de reservas de viajes en autobús, desarrollado con **ASP.NET Core MVC** y **Entity Framework Core**. La aplicación permite a los usuarios registrarse, iniciar sesión y gestionar sus reservas de viajes. También incluye un sistema de autenticación basado en **ASP.NET Identity**.
 
-## Video de Presentación del proyecto
-
-[LINK VIDEO](#)
-
-
 ## Funcionalidades
 
 1. **Registro e Inicio de Sesión de Usuarios**: Los usuarios deben poder registrarse y autenticarse en el sistema. Validación de datos de entrada y manejo de errores.
